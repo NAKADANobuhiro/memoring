@@ -276,7 +276,13 @@ async function answer(chosen) {
   const ok = same(pickedIdx, correctIdx);            // 複数選択は完全一致のみ正解
   answers[idx] = { ok, picked: chosen, q };
 
-  await log.add({ id: uuid(), deck: deck.id, q: q.item.id, ok, ts: Date.now(), dev });
+  // 保存に失敗しても採点表示は続ける（記録が落ちても学習は止めない）
+  try {
+    await log.add({ id: uuid(), deck: deck.id, q: q.item.id, ok, ts: Date.now(), dev });
+  } catch (e) {
+    console.error("回答ログの保存に失敗", e);
+    setSync("記録できず", "bad");
+  }
 
   [...app.querySelectorAll(".choice")].forEach((b, i) => {
     b.disabled = true;

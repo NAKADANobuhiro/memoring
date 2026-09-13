@@ -23,12 +23,18 @@ function open() {
   });
 }
 
+// fn の戻り値が IDBRequest なら、その result を返す。
+// 「result が undefined かどうか」で判定してはいけない。
+// 値が無いとき（get のミス）に IDBRequest 自身が返り、
+// それを他所へ持ち出すと put で DataCloneError になる。
 function tx(store, mode, fn) {
   return open().then(db => new Promise((res, rej) => {
     const t = db.transaction(store, mode);
     const out = fn(t.objectStore(store));
-    t.oncomplete = () => res(out && out.result !== undefined ? out.result : out);
+    const isReq = out instanceof IDBRequest;
+    t.oncomplete = () => res(isReq ? out.result : out);
     t.onerror = () => rej(t.error);
+    t.onabort = () => rej(t.error || new Error("トランザクションが中断されました"));
   }));
 }
 
