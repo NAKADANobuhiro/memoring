@@ -41,24 +41,83 @@ export function deckStates(deck, logs, now = Date.now()) {
   return map;
 }
 
+const shuffle = a => {
+  const x = a.slice();
+  for (let i = x.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [x[i], x[j]] = [x[j], x[i]];
+  }
+  return x;
+};
+
+/**
+ * 同じ優先度の中で、分野を巡回させながら並べ替える。
+ *
+ * これが無いと、items が分野ごとに固まっているデッキでは
+ * 先頭の分野から順に消化され、序盤の出題が偏る。
+ *
+ * 配分は除数法（サン＝ラグ式）。比重に対して取り分が最も不足している分野から
+ * 1 つずつ取るので、weight があればその比率、無ければ語数の比率に収束する。
+ * 分野内の並び順（記憶度の低い順など）はそのまま保たれる。
+ */
+function spread(deck, rows) {
+  if (rows.length < 2) return rows;
+
+  const buckets = new Map();
+  rows.forEach(r => {
+    if (!buckets.has(r.it.c)) buckets.set(r.it.c, []);
+    buckets.get(r.it.c).push(r);
+  });
+  if (buckets.size < 2) return rows;
+
+  const cats = [...buckets.keys()];
+  const weightOf = c => {
+    const w = deck.categories[c] && deck.categories[c].weight;
+    return w > 0 ? w : buckets.get(c).length;   // 比重の指定が無ければ語数で代用
+  };
+  const taken = new Map(cats.map(c => [c, 0]));
+  const out = [];
+
+  while (out.length < rows.length) {
+    let best = null, bestKey = -Infinity;
+    for (const c of cats) {
+      if (taken.get(c) >= buckets.get(c).length) continue;
+      const key = weightOf(c) / (2 * taken.get(c) + 1);
+      if (key > bestKey) { bestKey = key; best = c; }
+    }
+    out.push(buckets.get(best)[taken.get(best)]);
+    taken.set(best, taken.get(best) + 1);
+  }
+  return out;
+}
+
 /**
  * 出題順。
  * 1. 期限切れ（超過が大きいもの優先）
  * 2. 未出題
  * 3. まだ期限前だが記憶度が低いもの
+ * いずれの段でも、分野が偏らないよう巡回させて並べる。
  */
 export function pickQueue(deck, states, { cats, size, now = Date.now() }) {
   const pool = deck.items.filter(it => !cats || cats.includes(it.c));
-  const scored = pool.map(it => {
+  const due = [], unseen = [], later = [];
+
+  pool.forEach(it => {
     const s = states.get(it.id) || { seen: 0, due: 0, recall: 0 };
-    let rank, key;
-    if (s.seen === 0) { rank = 1; key = 0; }
-    else if (s.due <= now) { rank = 0; key = -(now - s.due); }
-    else { rank = 2; key = s.recall; }
-    return { it, rank, key, s };
+    if (s.seen === 0) unseen.push({ it, s });
+    else if (s.due <= now) due.push({ it, s });
+    else later.push({ it, s });
   });
-  scored.sort((a, b) => a.rank - b.rank || a.key - b.key);
-  return scored.slice(0, Math.min(size, scored.length)).map(x => x.it);
+
+  due.sort((a, b) => a.s.due - b.s.due);            // 超過が大きいものから
+  later.sort((a, b) => a.s.recall - b.s.recall);    // 記憶が薄いものから
+
+  const queue = [
+    ...spread(deck, due),
+    ...spread(deck, shuffle(unseen)),               // 未出題は互いに同格なので順序を固定しない
+    ...spread(deck, later),
+  ];
+  return queue.slice(0, Math.min(size, queue.length)).map(x => x.it);
 }
 
 /** 分野別の到達度。記憶度で重みづけした「今この分野で取れる割合」 */
