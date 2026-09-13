@@ -1,0 +1,53 @@
+{
+  "id": "vocab-en",
+  "title": "英単語",
+  "source": "Duolingo で出会った語を随時追加",
+  "pass": 0.8,
+  "unit": "語",
+  "dir": "t2d",
+  "dirLabels": ["単語 → 意味", "意味 → 単語"],
+  "asks": { "t2d": "この語の意味は？", "d2t": "この意味にあたる語は？" },
+  "categories": {
+    "verb":   { "label": "動詞",        "color": "var(--c-model)" },
+    "adj":    { "label": "形容詞・副詞", "color": "var(--c-learn)" },
+    "noun":   { "label": "名詞",        "color": "var(--c-law)" },
+    "phrase": { "label": "熟語・表現",   "color": "var(--c-trend)" }
+  },
+  "items": [
+    { "id": "v01", "c": "verb", "t": "resemble", "d": "～に似ている", "n": "他動詞。resemble to とは言わない。" },
+    { "id": "v02", "c": "verb", "t": "hesitate", "d": "ためらう、ちゅうちょする", "n": "hesitate to do の形が多い。" },
+    { "id": "v03", "c": "verb", "t": "postpone", "d": "延期する、先送りする", "n": "postpone doing。to do は取らない。" },
+    { "id": "v04", "c": "verb", "t": "acknowledge", "d": "認める、受け取ったと知らせる", "n": "事実を認める／受領を通知する、の二義。" },
+    { "id": "v05", "c": "verb", "t": "linger", "d": "長居する、なかなか消えない", "n": "匂いや余韻にも使う。" },
+    { "id": "v06", "c": "verb", "t": "thrive", "d": "よく育つ、栄える", "n": "thrive on ～（～があってこそ伸びる）。" },
+    { "id": "v07", "c": "verb", "t": "stumble", "d": "つまずく、口ごもる", "n": "stumble upon で偶然出くわす。" },
+    { "id": "v08", "c": "verb", "t": "tempt", "d": "誘惑する、その気にさせる", "n": "be tempted to do で「～したくなる」。" },
+
+    { "id": "a01", "c": "adj", "t": "reluctant", "d": "気が進まない、しぶしぶの", "n": "be reluctant to do。" },
+    { "id": "a02", "c": "adj", "t": "blunt", "d": "率直すぎる、ぶっきらぼうな", "n": "刃物なら「切れない」。" },
+    { "id": "a03", "c": "adj", "t": "thorough", "d": "徹底的な、抜かりのない", "n": "発音は「サラ」寄り。through と別語。" },
+    { "id": "a04", "c": "adj", "t": "stubborn", "d": "頑固な、手ごわい", "n": "汚れが落ちない意味でも使う。" },
+    { "id": "a05", "c": "adj", "t": "humble", "d": "謙虚な、質素な", "n": "humble opinion は控えめな意見。" },
+    { "id": "a06", "c": "adj", "t": "tedious", "d": "退屈で長ったらしい", "n": "作業のうんざり感。" },
+    { "id": "a07", "c": "adj", "t": "eager", "d": "熱心な、しきりに～したがる", "n": "be eager to do。" },
+    { "id": "a08", "c": "adj", "t": "vague", "d": "あいまいな、ぼんやりした", "n": "発音は「ヴェイグ」。" },
+
+    { "id": "n01", "c": "noun", "t": "chore", "d": "家事、決まりきった雑用", "n": "do the chores。" },
+    { "id": "n02", "c": "noun", "t": "grudge", "d": "恨み、わだかまり", "n": "hold a grudge で根に持つ。" },
+    { "id": "n03", "c": "noun", "t": "errand", "d": "お使い、ちょっとした用事", "n": "run errands。" },
+    { "id": "n04", "c": "noun", "t": "hassle", "d": "面倒、手間のかかる厄介事", "n": "口語的。動詞では「しつこく絡む」。" },
+    { "id": "n05", "c": "noun", "t": "pledge", "d": "誓約、公約", "n": "動詞でも使う。" },
+    { "id": "n06", "c": "noun", "t": "remark", "d": "発言、所見", "n": "make a remark。" },
+    { "id": "n07", "c": "noun", "t": "burden", "d": "重荷、負担", "n": "動詞で「負わせる」。" },
+    { "id": "n08", "c": "noun", "t": "treat", "d": "おごり、ごほうび", "n": "動詞は「扱う・おごる」。" },
+
+    { "id": "p01", "c": "phrase", "t": "put up with", "d": "我慢する、耐える", "n": "tolerate の口語版。" },
+    { "id": "p02", "c": "phrase", "t": "run out of", "d": "使い果たす、切らす", "n": "We ran out of milk." },
+    { "id": "p03", "c": "phrase", "t": "come across", "d": "偶然見つける、～という印象を与える", "n": "二義あるので文脈で判断。" },
+    { "id": "p04", "c": "phrase", "t": "get along with", "d": "うまくやっていく", "n": "人間関係に使う。" },
+    { "id": "p05", "c": "phrase", "t": "turn down", "d": "断る、音量を下げる", "n": "申し出を断る用法が頻出。" },
+    { "id": "p06", "c": "phrase", "t": "bring up", "d": "話題に出す、育てる", "n": "二義あり。" },
+    { "id": "p07", "c": "phrase", "t": "make up for", "d": "埋め合わせる", "n": "make up（仲直りする・でっち上げる）と区別。" },
+    { "id": "p08", "c": "phrase", "t": "look into", "d": "調査する、詳しく調べる", "n": "look for（探す）と混同しない。" }
+  ]
+}

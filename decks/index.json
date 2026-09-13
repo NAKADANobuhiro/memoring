@@ -1,0 +1,20 @@
+[
+  {
+    "id": "genai-passport",
+    "file": "genai-passport.json",
+    "title": "生成AIパスポート",
+    "subtitle": "2026年10月受験・全64語"
+  },
+  {
+    "id": "au",
+    "file": "au.json",
+    "title": "システム監査技術者",
+    "subtitle": "2027年2-3月受験・28語＋設問5（拡充中）"
+  },
+  {
+    "id": "vocab-en",
+    "file": "vocab-en.json",
+    "title": "英単語",
+    "subtitle": "Duolingo で出会った語・32語"
+  }
+]
